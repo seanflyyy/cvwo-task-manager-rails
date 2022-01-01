@@ -9,7 +9,7 @@ module Api
                 if task.save 
                     render json: TaskSerializer.new(task).serialized_json
                 else 
-                    render json: { error: review.errors.messages }, status: 422
+                    render json: { error: task.errors.messages }, status: 422
                 end 
             end 
 
@@ -19,9 +19,20 @@ module Api
                 if task.destroy 
                     head :no_content
                 else 
-                    render json: { error: review.errors.messages }, status: 422
+                    render json: { error: task.errors.messages }, status: 422
                 end 
             end 
+
+            def update
+                task = Task.find(params[:id])
+
+                if task.update(task_params) 
+                    render json: TaskSerializer.new(task).serialized_json
+                else 
+                    render json: {error: task.errors.messages }, status: 422
+                end 
+            end 
+
 
             private 
 
