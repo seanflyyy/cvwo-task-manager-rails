@@ -3,6 +3,18 @@ module Api
         class TasksController < ApplicationController
             protect_from_forgery with: :null_session 
 
+            def index 
+                tasks = Task.all
+
+                render json: TaskSerializer.new(tasks).serialized_json
+            end 
+        
+            def show
+                task = Task.find(params[:id])
+
+                render json: TaskSerializer.new(task).serialized_json
+            end 
+
             def create 
                 task = Task.new(task_params)
 
