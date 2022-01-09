@@ -10,7 +10,7 @@ module Api
             end 
             
             def show
-                label = Label.find_by(slug: params[:slug])
+                label = Label.find_by(params[:id])
 
                 render json: LabelSerializer.new(label, options).serialized_json
             end 
