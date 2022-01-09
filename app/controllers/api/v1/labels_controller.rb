@@ -10,7 +10,7 @@ module Api
             end 
             
             def show
-                label = Label.find_by(params[:id])
+                label = Label.find(params[:id])
 
                 render json: LabelSerializer.new(label, options).serialized_json
             end 
@@ -26,9 +26,9 @@ module Api
             end 
 
             def update
-                label = Label.find_by(slug: params[:slug])
+                label = Label.find(params[:id])
 
-                if label.update(label_params) 
+                if label.update(label_parsams) 
                     render json: LabelSerializer.new(label, options).serialized_json
                 else 
                     render json: {error: label.errors.messages }, status: 422
@@ -36,7 +36,7 @@ module Api
             end 
 
             def destroy 
-                label = Label.find_by(slug: params[:slug])
+                label = Label.find(params[:id])
 
                 if label.destroy 
                     head :no_content
